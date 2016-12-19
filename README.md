@@ -67,9 +67,9 @@ The language with chinese syntax and english vocabularies is called ¡mChinese-in
 
 ## License (±ÂÅv)
 
-The Bajiu project is licensed in MIT license.
+The english_chinese_machine_translation project is licensed in MIT license.
 
-Copyright (c) 2013 Bajiu
+Copyright (c) 2013 english_chinese_machine_translation
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
