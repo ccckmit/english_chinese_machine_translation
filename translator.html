@@ -1,0 +1,124 @@
+<html>
+<style>
+#source { margin:10px; padding:10px; padding:10px; width:90%; height:30vh; display:"inline"; line-height:180%; }
+#target { overflow:auto; margin:10px; padding:10px; width:88%; height:30vh; display:"inline"; border:dotted #336699 1px; line-height:180%;  }
+button, input { margin:10px; padding:10px; }
+</style>
+<body>
+<textarea id="source">
+一隻狗追一隻貓 , 我為你感到驕傲 . 我希望你一切順利
+----------------------------
+a 狗追 a 貓 . 我 am 驕傲 of 你 . May 上帝保佑你.
+你可以交談 to 外國人 in 中文 by 學習英文文法.
+你 do not have to 記住 單字 for 學習ing 英文.
+不要告訴 me that 你有一百萬美元s.
+
+</textarea><br/>
+<input id="c2eRadio" name="mtType" type="radio" checked>中翻英 <input id="e2cRadio" name="mtType" type="radio">英翻中
+<div id="target">
+</div>
+<script src="c2e.js"></script>
+<script src="e2c.js"></script>
+<script>
+var sourceBox = document.getElementById("source");
+var targetBox = document.getElementById("target");
+
+var wordRegex = /([\w']+)|([\u4E00-\u9FFF]+)|([\n\r]+)|(\S+)/gmi;
+var suffixList = [
+  "=", "d==%cd", "s==%cs", "es==%ces", "ed==%ced", "ly==%cly", "al==%cal", 
+  "er=e=%cer", "er==%cer", "'s==%c's", "ies=y=%cies", 
+  "ion==%cion", "ion=e=%cion",
+  "ing==%cing", "ing=e=%ceing", "est=e=%cest", "able==%cable" ];
+
+var clex = function(c2e, text) {
+  var array = [];
+  for (var i=0; i<text.length; ) {
+    for (var len=4; len>=1; len--) {
+      var c = text.substr(i, len);
+      var e = c2e[c];
+      if (len === 1 || typeof e !== "undefined") {
+        array.push(c);
+        break;
+      }
+    }
+    i=i+Math.max(1,len);
+  }
+  return array;
+}
+
+var eMt = function(w) {
+  for (var i=0; i<suffixList.length; i++) {
+    var parts=suffixList[i].split("=");
+    var tail = parts[0], newTail=parts[1], pattern=parts[2];
+    if (w.endsWith(tail)) {
+      var w0 = w.substr(0, w.length-tail.length)+newTail;
+      var wt = e2c[w0.toLowerCase()];
+      if (typeof wt !== 'undefined') {
+        if (typeof pattern !== 'undefined') {
+          wt = pattern.replace('%c', wt);
+        }
+        return wt;
+      }
+    }
+  }
+  return w;
+}
+
+var lex = function(c2e, text) {
+  var words=[], m;
+  while (m = wordRegex.exec(text)) {
+    var word = m[0];
+    if (typeof m[4] !== 'undefined') {
+      words.push(m[4]);
+    } else if (typeof m[3] !== 'undefined') {
+      words.push(m[3]);
+    } else if (typeof m[2] !== 'undefined') {
+      var cwords = clex(c2e, m[2]);
+      cwords.forEach((c)=>words.push(c));
+    } else {
+      words.push(eMt(m[1]));
+    }
+  }
+  return words;
+}
+
+function doMt() {
+  var text = sourceBox.value.replace(/\r/g, '').replace(/\n/g, ' __br__ ').replace(/[<>]/g, '');
+  console.log("text=", text);
+  var twords, swords = lex(c2e, text);
+  if (document.getElementById("c2eRadio").checked)
+    twords = mt(swords, c2e);
+  else
+    twords = mt(swords, e2c);
+  targetBox.innerHTML = twords.join(' ').replace(/([>\.]\s*)(\w)/g, function(match,$1,$2) {
+    return $1+$2.toUpperCase();
+  });
+}
+
+function mt(s, s2t) {
+  var t = [];
+  for (i in s) {
+    var sword = s[i].toLowerCase();
+    if (sword === '__br__') 
+      tword = '<br/>';
+    else {
+      var tword = s2t[sword];
+      if (typeof tword === 'undefined')
+        tword = sword;
+    }
+    t.push(tword);
+  }
+  return t;
+}
+
+window.onload = function() {
+  doMt();
+	sourceBox.addEventListener("keyup", function(event) {
+		event.preventDefault();
+    doMt();
+	});
+}
+
+</script>
+</body>
+</html>
