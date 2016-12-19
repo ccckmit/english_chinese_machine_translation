@@ -84,7 +84,6 @@ var lex = function(c2e, text) {
 
 function doMt() {
   var text = sourceBox.value.replace(/\r/g, '').replace(/\n/g, ' __br__ ').replace(/[<>]/g, '');
-  console.log("text=", text);
   var twords, swords = lex(c2e, text);
   if (document.getElementById("c2eRadio").checked)
     twords = mt(swords, c2e);
