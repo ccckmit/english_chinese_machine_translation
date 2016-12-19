@@ -4,11 +4,11 @@
 
 This program is a very simple Machine Translation web page between english and chinese.
 
-The project contains two dictionaries ( <e2c.js> and <c2e.js> ) with 20000 words.
+The project contains two dictionaries ( [e2c.js](e2c.js) and [c2e.js](c2e.js) ) with 20000 words.
 
 The main program is a web page that contains only 100 lines of javascript code.
 
-All you have to do is click <translator.html> and type in the text box.
+All you have to do is click [translator.html](translator.html) and type in the text box.
 
 ## Example
 
@@ -49,11 +49,11 @@ The language with chinese syntax and english vocabularies is called 《Chinese-in
 
 本專案是一個非常簡單的《英漢翻譯網頁》。
 
-整個專案包含兩個大約兩萬字的辭典 ( <e2c.js> 和 <c2e.js> )。 
+整個專案包含兩個大約兩萬字的辭典 ( [e2c.js](e2c.js) 和 [c2e.js](c2e.js) )。 
 
 主程式是一個網頁，該網頁包含 100 行的 javascript 程式碼。
 
-你所需要做的就是開啟 <translator.html> 然後開始輸入文章就對了。
+你所需要做的就是開啟 [translator.html](translator.html) 然後開始輸入文章就對了。
 
 ## 說明 
 
